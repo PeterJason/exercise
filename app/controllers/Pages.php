@@ -32,7 +32,7 @@ class Pages extends Controller {
         $all_records = $this->_numbers->find('customer', 'phone')->search();
         $this->_numbers->setNumbers($all_records);
         $this->_countries_list = $this->_numbers->parseNumbers()->all_distinct_countries();
-        //set settings pagination
+        //set a global settings pagination
         $this->_page = $this->pageNumber();
         $this->_numbers->setLimit(self::LIMIT_PER_PAGE);
         $this->_numbers->setPage($this->_page); //used to calculate offset
@@ -44,7 +44,7 @@ class Pages extends Controller {
     public function index() : void {
         $numbers_list = $this->_numbers->limitListNumbers();
 
-        $paginator = new Paginator(URL_ROOT . 'index/page/', "Prev", "Next");
+        $paginator = new Paginator(URL_ROOT . 'index', "Prev", "Next");
         $paginator->pagination($this->_page, $this->_numbers->countListNumbers(), self::LIMIT_PER_PAGE);
         
         $data = [
@@ -63,7 +63,7 @@ class Pages extends Controller {
     public function stateNumber($state) : void {
         $numbers_list = $this->_numbers->checkStateNumbers($state)->limitListNumbers();
 
-        $paginator = new Paginator(URL_ROOT . 'pages/stateNumber/'.$state.'/page/', "Prev", "Next");
+        $paginator = new Paginator(URL_ROOT . 'pages/'.__FUNCTION__.'/'.$state, "Prev", "Next");
         $paginator->pagination($this->_page, $this->_numbers->countListNumbers(), self::LIMIT_PER_PAGE);
         
         $data = [
@@ -82,7 +82,7 @@ class Pages extends Controller {
     public function countryNumber($country) : void {
         $numbers_list = $this->_numbers->checkCountryNumbers($country)->limitListNumbers();
         
-        $paginator = new Paginator(URL_ROOT . 'pages/countryNumber/'.$country.'/page/', "Prev", "Next");
+        $paginator = new Paginator(URL_ROOT . 'pages/countryNumber/'.$country, "Prev", "Next");
         $paginator->pagination($this->_page, $this->_numbers->countListNumbers(), self::LIMIT_PER_PAGE);
 
         $data = [

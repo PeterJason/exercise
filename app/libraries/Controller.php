@@ -5,20 +5,20 @@ namespace app\libraries;
  * Base Controller
  * Loads the models and views
  */
-abstract class Controller {
+class Controller {
     /**
      * Load model
      * @param $model
      * @return mixed
      */
-    public function model($model) {
+    /*public function model($model) {
         //Require model file
         require_once '../app/models/' . $model . ".php";
         
         //instantiate model
         $class = 'app\\models\\' . $model;
         return new $class();
-    }
+    }*/
 
     /**
      * Load view
@@ -35,11 +35,15 @@ abstract class Controller {
             die("View does not exists");
         }
     }
-    
 
+    /**
+     * Get page number from URL
+     * @return int
+     */
     public function pageNumber() : int {
-        $urlArray = explode('/', $_GET['url']);
+        $urlArray = explode('/', filter_var($_GET['url'], FILTER_SANITIZE_STRING));
         $page_number = 0;
+
         foreach ($urlArray as $key => $url) {
             if($url == 'page') {
                 $page_number = is_numeric($urlArray[$key+1]) ? $urlArray[$key+1] : 1;

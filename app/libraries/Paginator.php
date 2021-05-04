@@ -49,7 +49,7 @@ class Paginator {
      * @param $totalRecords
      * @param $limit
      */
-    public function pagination($page_number, $totalRecords, $limit) {
+    public function pagination($page_number, $totalRecords, $limit) : void {
         $this->_totalRecords = $totalRecords;
         $this->_limit = $limit;
         $this->_firstPageNumber = $page_number <= 1 ? 1 : $page_number - 1;
@@ -63,8 +63,8 @@ class Paginator {
     public function render() : string {
         $html  = '<nav aria-label="Page navigation example">';
         $html .= '<ul class="pagination float-right">';
-        $html .= "<li class='page-item'><a class='page-link' href='$this->_url$this->_firstPageNumber'>$this->_firstPageName</a></li>";
-        $html .= "<li class='page-item'><a class='page-link' href='$this->_url$this->_lastPageNumber'>$this->_lastPageName</a></li>";
+        $html .= "<li class='page-item'><a class='page-link' href='{$this->_url}/page/{$this->_firstPageNumber}'>{$this->_firstPageName}</a></li>";
+        $html .= "<li class='page-item'><a class='page-link' href='{$this->_url}/page/{$this->_lastPageNumber}'>{$this->_lastPageName}</a></li>";
         $html .= '</ul>';
         $html .= '</nav>';
         

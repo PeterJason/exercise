@@ -8,13 +8,13 @@ abstract class DataSearch extends Database{
     private $_statement;
 
     /**
-     * Create a select statment
-     * @param string $entity
+     * Create a select statement
+     * @param string $table
      * @param string $columns
      * @return $this
      */
-    public function find(string $entity, string $columns = "*") : DataSearch {
-        $this->_statement = "SELECT {$columns} FROM {$entity}";
+    public function find(string $table, string $columns = "*") : DataSearch {
+        $this->_statement = "SELECT {$columns} FROM {$table}";
         return $this;
     }
 

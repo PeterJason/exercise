@@ -15,5 +15,7 @@
     },
     "classmap": ["app/libraries", "app/controllers", "app/models"]
   },
-  "require": {}
+  "require": {
+    "php": ">=7.1"
+  }
 }

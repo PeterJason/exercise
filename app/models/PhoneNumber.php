@@ -42,7 +42,7 @@ class PhoneNumber extends DataSearch {
     /**
      * PhoneNumber constructor.
      */
-    public function __construct(){    }
+    public function __construct(){ }
 
     /**
      * @return DataSearch|null
@@ -68,8 +68,7 @@ class PhoneNumber extends DataSearch {
      */
     private function is_Valid() : bool {
         $regex_validate = self::$_validator[$this->_indicative]['regex'];
-        $number_validation = preg_match("/$regex_validate/", $this->_number, $output);
-        return $number_validation;
+        return preg_match("/$regex_validate/", $this->_number, $output);
     }
 
     /**
@@ -84,12 +83,12 @@ class PhoneNumber extends DataSearch {
      * @return DataSearch
      */
     public function checkStateNumbers($state) : DataSearch {
-        $state = $state == 'valid' ? true : false;
+        $state = $state === 'valid';
         $numbers_list = $this->_number_list;
         $this->_number_list = array();
         
         foreach ($numbers_list as $numbers) {
-            if($numbers['state'] == $state) {
+            if($numbers['state'] === $state) {
                 $this->_number_list[] = $numbers;
             }
         }
@@ -129,7 +128,7 @@ class PhoneNumber extends DataSearch {
         $this->_number_list = array();
 
         foreach ($numbers_list as $number) {
-            if($number['country'] == $country) {
+            if($number['country'] === $country) {
                 $this->_number_list[] = $number;
             }
         }
