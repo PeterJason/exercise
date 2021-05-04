@@ -1,0 +1,19 @@
+{
+  "name": "csilva/phone",
+  "description": "Phone numbers",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Christofer Silva",
+      "email": "cg.silva@hotmail.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Source\\": "app"
+    },
+    "classmap": ["app/libraries", "app/controllers", "app/models"]
+  },
+  "require": {}
+}
