@@ -2,7 +2,8 @@
 namespace app\models;
 use app\libraries\DataSearch;
 
-class PhoneNumber extends DataSearch {
+class PhoneNumber extends DataSearch
+{
     /**
      * @var
      */
@@ -45,9 +46,10 @@ class PhoneNumber extends DataSearch {
     public function __construct(){ }
 
     /**
-     * @return DataSearch|null
+     * @return PhoneNumber|null
      */
-    public function parseNumbers() : ?DataSearch {
+    public function parseNumbers() : ?PhoneNumber
+    {
         foreach ($this->_numbers as $number) {
             $this->_number = $number['phone'];
             $regNumberArray = preg_match('/\((\d+)\)\s(.+)/', $this->_number, $output);
@@ -66,7 +68,8 @@ class PhoneNumber extends DataSearch {
     /**
      * @return bool
      */
-    private function isValid() : bool {
+    private function isValid() : bool
+    {
         $regexValidate = self::$_validator[$this->_indicative]['regex'];
         return preg_match("/$regexValidate/", $this->_number, $output);
     }
@@ -74,15 +77,17 @@ class PhoneNumber extends DataSearch {
     /**
      * @return string
      */
-    private function checkCountry() : string {
+    private function checkCountry() : string
+    {
         return self::$_validator[$this->_indicative]['country'];
     }
 
     /**
      * @param $state
-     * @return DataSearch
+     * @return PhoneNumber
      */
-    public function checkStateNumbers($state) : DataSearch {
+    public function checkStateNumbers($state) : PhoneNumber
+    {
         $state = $state === 'valid';
         $numbers_list = $this->_numberList;
         $this->_numberList = array();
@@ -100,30 +105,24 @@ class PhoneNumber extends DataSearch {
      * return all distinct countries found on all numbers
      * @return array|null
      */
-    public function allDistinctCountries() : ?array {
+    public function allDistinctCountries() : ?array
+    {
         $countries = array();
-        $insert = true;
 
         foreach ($this->_numberList as $number) {
-            foreach ($countries as $country) {
-                if($number['country']===$country) {
-                    $insert = false;
-                }
-            }
-            if ($insert === true) {
+            if (!in_array($number['country'], $countries, true)) {
                 array_push($countries, $number['country']);
             }
-            $insert = true;
         }
-
         return $countries;
     }
 
     /**
      * @param $country
-     * @return DataSearch|null
+     * @return PhoneNumber|null
      */
-    public function checkCountryNumbers($country) : ?DataSearch {
+    public function checkCountryNumbers($country) : ?PhoneNumber
+    {
         $numbersList = $this->_numberList;
         $this->_numberList = array();
 
@@ -140,14 +139,15 @@ class PhoneNumber extends DataSearch {
      * return the numbers by limit defined (includes offset and limit of rows)
      * @return array|null
      */
-    public function limitListNumbers() : ?array {
+    public function limitListNumbers() : ?array
+    {
         $numbersList = array();
-            $offset = (($this->_page * $this->_limit) - $this->_limit >= 0 ? ($this->_page * $this->_limit) - $this->_limit : 0);
+        $offset = (($this->_page * $this->_limit) - $this->_limit >= 0 ? ($this->_page * $this->_limit) - $this->_limit : 0);
 
         for($i=$offset; $i < $offset+$this->_limit; $i++) {
-                if (isset($this->_numberList[$i])) {
-                    $numbersList[] = $this->_numberList[$i];
-                }
+            if (isset($this->_numberList[$i])) {
+                $numbersList[] = $this->_numberList[$i];
+            }
         }
 
         return $numbersList;
@@ -157,7 +157,8 @@ class PhoneNumber extends DataSearch {
      * count total numbers
      * @return int
      */
-    public function countListNumbers() : int {
+    public function countListNumbers() : int
+    {
         return count($this->_numberList);
     }
 
@@ -165,7 +166,8 @@ class PhoneNumber extends DataSearch {
      * Set all numbers
      * @param $numbers
      */
-    public function setNumbers($numbers) : void {
+    public function setNumbers($numbers) : void
+    {
         $this->_numbers = $numbers;
     }
 
@@ -173,7 +175,8 @@ class PhoneNumber extends DataSearch {
      * Set limit
      * @param $limit
      */
-    public function setLimit($limit) : void {
+    public function setLimit($limit) : void
+    {
         $this->_limit = $limit;
     }
 
@@ -181,7 +184,8 @@ class PhoneNumber extends DataSearch {
      * set page
      * @param $page
      */
-    public function setPage($page) : void {
+    public function setPage($page) : void
+    {
         $this->_page = $page;
     }
 }

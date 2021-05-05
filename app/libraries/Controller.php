@@ -1,19 +1,21 @@
 <?php
 namespace app\libraries;
-
+use app\libraries\Core;
 /*
  * Base Controller
- * Loads the models and views
+ * Loads the views
  */
-class Controller {
-
+class Controller
+{
     /**
      * Load view
      * @param $view
      * @param array $data
      */
-    public function view($view, $data = []) {
+    protected function view($view, $data = []) : void
+    {
         $data = (object)$data;
+
         //Check for view file
         if (file_exists('../app/views/' . $view . '.php')){
             require_once '../app/views/' . $view . '.php';
@@ -27,7 +29,8 @@ class Controller {
      * Get page number from URL
      * @return int
      */
-    public function pageNumber() : int {
+    protected function pageNumber() : int
+    {
         $urlArray = explode('/', filter_var($_GET['url'], FILTER_SANITIZE_STRING));
         $page_number = 1;
         foreach ($urlArray as $key => $url) {
@@ -37,5 +40,25 @@ class Controller {
             }
         }
         return $page_number;
+    }
+
+    /**
+     * Get current controller
+     * @return string|null
+     */
+    protected function getController() : ?string
+    {
+        $urlArray = explode('/', filter_var($_GET['url'], FILTER_SANITIZE_STRING));
+        return $urlArray[0] ?? null;
+    }
+
+    /**
+     * Get current method
+     * @return string|null
+     */
+    protected function getMethod() : ?string
+    {
+        $urlArray = explode('/', filter_var($_GET['url'], FILTER_SANITIZE_STRING));
+        return $urlArray[1] ?? null;
     }
 }

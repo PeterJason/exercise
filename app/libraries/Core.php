@@ -2,12 +2,11 @@
 namespace app\libraries;
 
 /*
- * App Core Class
- * Create URL & loads core controller
  * URL FORMAT -/controller/method/params
  */
 
-class Core {
+class Core
+{
     /**
      * @var mixed|string
      */
@@ -24,11 +23,12 @@ class Core {
     /**
      * Core constructor.
      */
-    public function __construct(){
+    public function __construct()
+    {
         $url = $this->getUrl();
 
         //Look in controllers for first value
-        if(!empty($url[0]) && file_exists(dirname(__FILE__, 2) . '/controllers/' . ucwords($url[0]) . '.php')){
+        if(!empty($url[0]) && file_exists(dirname(__FILE__, 2) . '/controllers/' . ucwords($url[0]) . '.php')) {
             //if exists, set as controller
             $this->currentController = ucwords($url[0]);
             //Unset 0 index
@@ -41,7 +41,7 @@ class Core {
         $this->currentController = new $class;
 
         //check for second part of url
-        if(isset($url[1])){
+        if(isset($url[1])) {
             //Check to see if method exists in controller
             if(method_exists($this->currentController, $url[1])){
                 $this->currentMethod = $url[1];
@@ -60,14 +60,15 @@ class Core {
     /**
      * @return false|string[]
      */
-    public function getUrl() {
+    private function getUrl()
+    {
         if(isset($_GET['url'])) {
             $url = rtrim($_GET['url'], '/');
             $url = filter_var($url, FILTER_SANITIZE_URL);
             $url = explode('/', $url);
             return $url;
         } else {
-            $_GET['url'] = $this->currentMethod; 
+            $_GET['url'] = strtolower($this->currentController) . '/' .$this->currentMethod;
         }
     }
 }

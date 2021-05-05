@@ -2,7 +2,8 @@
 namespace app\libraries;
 use PDO;
 
-class Database {
+class Database
+{
     /**
      * @var PDO
      */
@@ -20,7 +21,8 @@ class Database {
      * Connection to database using PDO
      * Database constructor.
      */
-    protected function __construct() {
+    protected function __construct()
+    {
         try {
             // connect to database
             $this->_connection = new PDO( "sqlite:" . $this->_database, null, null, array(PDO::ATTR_PERSISTENT => true) );
@@ -34,7 +36,8 @@ class Database {
      * Get an instance of the Database
      * @return Database
      */
-    public static function getInstance() : Database {
+    public static function getInstance() : Database
+    {
         //if no instance then make one
         if (!self::$_instance) {
             self::$_instance = new self();
@@ -56,7 +59,8 @@ class Database {
      *  Get sqlite connection
      * @return PDO
      */
-    public function getConnection() : PDO {
+    public function getConnection() : PDO
+    {
         return $this->_connection;
     }
 }

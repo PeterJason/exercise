@@ -6,9 +6,11 @@
         Select country
       </button>
       <div class="dropdown-menu">
+        <?php if (!empty($data->countries) && isset($data->countries)): ?>
           <?php foreach ($data->countries as $country):  ?>
             <a class="dropdown-item" href="<?php echo URL_ROOT; ?>pages/countryNumber/<?php echo $country; ?>"><?php echo $country; ?></a>
           <?php endforeach; ?>
+        <?php endif; ?>
       </div>
     </div>
     <div class="btn-group">
@@ -31,7 +33,7 @@
     </tr>
   </thead>
   <tbody>
-<?php if (!empty($data->numbers)): ?>
+<?php if (!empty($data->numbers) && isset($data->numbers)): ?>
     <?php foreach ($data->numbers as $number):  ?>
         <tr class="text-center">
           <td><?php echo $number['country']; ?></td>

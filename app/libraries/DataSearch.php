@@ -1,7 +1,8 @@
 <?php
 namespace app\libraries;
 
-abstract class DataSearch extends Database{
+class DataSearch extends Database
+{
     /**
      * @var
      */
@@ -13,7 +14,8 @@ abstract class DataSearch extends Database{
      * @param string $columns
      * @return $this
      */
-    public function find(string $table, string $columns = "*") : DataSearch {
+    public function find(string $table, string $columns = "*") : DataSearch
+    {
         $this->_statement = "SELECT {$columns} FROM {$table}";
         return $this;
     }
@@ -22,7 +24,8 @@ abstract class DataSearch extends Database{
      * fetch all results
      * @return array|null
      */
-    public function search() : ?array {
+    public function search() : ?array
+    {
         try {
             $data = array();
             $statement = parent::getInstance()->getConnection()->prepare($this->_statement);
