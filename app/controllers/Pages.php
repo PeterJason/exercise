@@ -29,8 +29,8 @@ class Pages extends Controller {
      */
     public function __construct() {
         $this->_numbers = new PhoneNumber();
-        $all_records = $this->_numbers->find('customer', 'phone')->search();
-        $this->_numbers->setNumbers($all_records);
+        $allRecords = $this->_numbers->find('customer', 'phone')->search();
+        $this->_numbers->setNumbers($allRecords);
         $this->_countriesList = $this->_numbers->parseNumbers()->allDistinctCountries();
         //set a global settings pagination
         $this->_page = $this->pageNumber();
@@ -42,13 +42,13 @@ class Pages extends Controller {
      * Display all numbers available in database
      */
     public function index() : void {
-        $numbers_list = $this->_numbers->limitListNumbers();
+        $numbersList = $this->_numbers->limitListNumbers();
 
         $paginator = new Paginator(URL_ROOT . 'index', "Prev", "Next");
         $paginator->pagination($this->_page, $this->_numbers->countListNumbers(), self::LIMIT_PER_PAGE);
 
         $data = [
-            'numbers' => $numbers_list,
+            'numbers' => $numbersList,
             'countries' => $this->_countriesList,
             'pagination' => $paginator->render()
         ];
@@ -61,13 +61,13 @@ class Pages extends Controller {
      * @param $state
      */
     public function stateNumber($state) : void {
-        $numbers_list = $this->_numbers->checkStateNumbers($state)->limitListNumbers();
+        $numbersList = $this->_numbers->checkStateNumbers($state)->limitListNumbers();
 
         $paginator = new Paginator(URL_ROOT . 'pages/stateNumber/'.$state, "Prev", "Next");
         $paginator->pagination($this->_page, $this->_numbers->countListNumbers(), self::LIMIT_PER_PAGE);
         
         $data = [
-            'numbers' => $numbers_list,
+            'numbers' => $numbersList,
             'countries' => $this->_countriesList,
             'pagination' => $paginator->render()
         ];
@@ -80,13 +80,13 @@ class Pages extends Controller {
      * @param $country
      */
     public function countryNumber($country) : void {
-        $numbers_list = $this->_numbers->checkCountryNumbers($country)->limitListNumbers();
+        $numbersList = $this->_numbers->checkCountryNumbers($country)->limitListNumbers();
         
         $paginator = new Paginator(URL_ROOT . 'pages/countryNumber/'.$country, "Prev", "Next");
         $paginator->pagination($this->_page, $this->_numbers->countListNumbers(), self::LIMIT_PER_PAGE);
 
         $data = [
-            'numbers' => $numbers_list,
+            'numbers' => $numbersList,
             'countries' => $this->_countriesList,
             'pagination' => $paginator->render()
         ];

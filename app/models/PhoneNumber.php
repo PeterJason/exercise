@@ -50,8 +50,8 @@ class PhoneNumber extends DataSearch {
     public function parseNumbers() : ?DataSearch {
         foreach ($this->_numbers as $number) {
             $this->_number = $number['phone'];
-            $reg_number_array = preg_match('/\((\d+)\)\s(.+)/', $this->_number, $output);
-            if ($reg_number_array) {
+            $regNumberArray = preg_match('/\((\d+)\)\s(.+)/', $this->_number, $output);
+            if ($regNumberArray) {
                 $this->_indicative = $output[1] ?? null;
                 $smallNumber = $output[2] ?? null;
                 $isValid = $this->isValid();
@@ -67,8 +67,8 @@ class PhoneNumber extends DataSearch {
      * @return bool
      */
     private function isValid() : bool {
-        $regex_validate = self::$_validator[$this->_indicative]['regex'];
-        return preg_match("/$regex_validate/", $this->_number, $output);
+        $regexValidate = self::$_validator[$this->_indicative]['regex'];
+        return preg_match("/$regexValidate/", $this->_number, $output);
     }
 
     /**
@@ -124,10 +124,10 @@ class PhoneNumber extends DataSearch {
      * @return DataSearch|null
      */
     public function checkCountryNumbers($country) : ?DataSearch {
-        $numbers_list = $this->_numberList;
+        $numbersList = $this->_numberList;
         $this->_numberList = array();
 
-        foreach ($numbers_list as $number) {
+        foreach ($numbersList as $number) {
             if($number['country'] === $country) {
                 $this->_numberList[] = $number;
             }
@@ -141,16 +141,16 @@ class PhoneNumber extends DataSearch {
      * @return array|null
      */
     public function limitListNumbers() : ?array {
-        $numbers_list = array();
+        $numbersList = array();
             $offset = (($this->_page * $this->_limit) - $this->_limit >= 0 ? ($this->_page * $this->_limit) - $this->_limit : 0);
 
         for($i=$offset; $i < $offset+$this->_limit; $i++) {
                 if (isset($this->_numberList[$i])) {
-                    $numbers_list[] = $this->_numberList[$i];
+                    $numbersList[] = $this->_numberList[$i];
                 }
         }
 
-        return $numbers_list;
+        return $numbersList;
     }
 
     /**
