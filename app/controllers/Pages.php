@@ -49,7 +49,7 @@ class Pages extends Controller {
 
         $data = [
             'numbers' => $numbers_list,
-            'countries' => $this->_countries_list,
+            'countries' => $this->_countriesList,
             'pagination' => $paginator->render()
         ];
 
