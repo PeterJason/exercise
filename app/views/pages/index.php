@@ -31,14 +31,20 @@
     </tr>
   </thead>
   <tbody>
-<?php foreach ($data->numbers as $number):  ?>
-    <tr class="text-center">
-      <th scope="row"><?php echo $number['country']; ?></th>
-      <td><?php echo $number['state'] == 0 ? 'NOK' : 'OK'; ?></td>
-      <td><?php echo '+'.$number['countryCode']; ?></td>
-      <td><?php echo $number['phoneNumber']; ?></td>
-    </tr>
-<?php endforeach;?>
+<?php if (!empty($data->numbers)): ?>
+    <?php foreach ($data->numbers as $number):  ?>
+        <tr class="text-center">
+          <td><?php echo $number['country']; ?></td>
+          <td><?php echo $number['state'] === true ? 'OK' : 'NOK'; ?></td>
+          <td><?php echo '+'.$number['countryCode']; ?></td>
+          <td><?php echo $number['phoneNumber']; ?></td>
+        </tr>
+    <?php endforeach; ?>
+<?php else: ?>
+        <tr class="text-center">
+            <td colspan="4">-- No records found --</tr>
+        </tr>
+<?php endif; ?>
   </tbody>
 </table>
 <?php echo $data->pagination; ?>

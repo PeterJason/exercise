@@ -17,7 +17,7 @@ class Database {
     private $_database = DB_NAME;
 
     /**
-     * connection to database using PDO
+     * Connection to database using PDO
      * Database constructor.
      */
     protected function __construct() {

@@ -45,15 +45,15 @@ class Paginator {
     }
 
     /**
-     * @param $page_number
+     * @param $pageNumber
      * @param $totalRecords
      * @param $limit
      */
-    public function pagination($page_number, $totalRecords, $limit) : void {
+    public function pagination($pageNumber, $totalRecords, $limit) : void {
         $this->_totalRecords = $totalRecords;
         $this->_limit = $limit;
-        $this->_firstPageNumber = $page_number <= 1 ? 1 : $page_number - 1;
-        $this->_lastPageNumber = (($limit * $page_number) < $totalRecords) ? $page_number+1 : $page_number;
+        $this->_firstPageNumber = $pageNumber <= 1 ? 1 : $pageNumber - 1;
+        $this->_lastPageNumber = (($this->_limit * $pageNumber) < $this->_totalRecords ) ? $pageNumber + 1 : $pageNumber;
     }
 
     /**

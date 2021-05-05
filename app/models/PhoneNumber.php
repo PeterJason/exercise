@@ -26,7 +26,7 @@ class PhoneNumber extends DataSearch {
     /**
      * @var array
      */
-    private $_number_list = array();
+    private $_numberList = array();
 
     /**
      * @var string[][]
@@ -53,11 +53,11 @@ class PhoneNumber extends DataSearch {
             $reg_number_array = preg_match('/\((\d+)\)\s(.+)/', $this->_number, $output);
             if ($reg_number_array) {
                 $this->_indicative = $output[1] ?? null;
-                $small_number = $output[2] ?? null;
-                $is_valid = $this->is_Valid();
-                $country_name = $this->check_country();
+                $smallNumber = $output[2] ?? null;
+                $isValid = $this->isValid();
+                $countryName = $this->checkCountry();
             }
-            $this->_number_list[] = array('country' => $country_name, 'state' => $is_valid, 'countryCode' => $this->_indicative, 'phoneNumber' => $small_number);
+            $this->_numberList[] = array('country' => $countryName, 'state' => $isValid, 'countryCode' => $this->_indicative, 'phoneNumber' => $smallNumber);
         }
 
         return $this;
@@ -66,7 +66,7 @@ class PhoneNumber extends DataSearch {
     /**
      * @return bool
      */
-    private function is_Valid() : bool {
+    private function isValid() : bool {
         $regex_validate = self::$_validator[$this->_indicative]['regex'];
         return preg_match("/$regex_validate/", $this->_number, $output);
     }
@@ -74,8 +74,8 @@ class PhoneNumber extends DataSearch {
     /**
      * @return string
      */
-    private function check_country() : string {
-        return self::$_validator[$this->_indicative]['country'];;
+    private function checkCountry() : string {
+        return self::$_validator[$this->_indicative]['country'];
     }
 
     /**
@@ -84,12 +84,12 @@ class PhoneNumber extends DataSearch {
      */
     public function checkStateNumbers($state) : DataSearch {
         $state = $state === 'valid';
-        $numbers_list = $this->_number_list;
-        $this->_number_list = array();
+        $numbers_list = $this->_numberList;
+        $this->_numberList = array();
         
         foreach ($numbers_list as $numbers) {
             if($numbers['state'] === $state) {
-                $this->_number_list[] = $numbers;
+                $this->_numberList[] = $numbers;
             }
         }
 
@@ -100,11 +100,11 @@ class PhoneNumber extends DataSearch {
      * return all distinct countries found on all numbers
      * @return array|null
      */
-    public function all_distinct_countries() : ?array {
+    public function allDistinctCountries() : ?array {
         $countries = array();
         $insert = true;
 
-        foreach ($this->_number_list as $number) {
+        foreach ($this->_numberList as $number) {
             foreach ($countries as $country) {
                 if($number['country']===$country) {
                     $insert = false;
@@ -124,12 +124,12 @@ class PhoneNumber extends DataSearch {
      * @return DataSearch|null
      */
     public function checkCountryNumbers($country) : ?DataSearch {
-        $numbers_list = $this->_number_list;
-        $this->_number_list = array();
+        $numbers_list = $this->_numberList;
+        $this->_numberList = array();
 
         foreach ($numbers_list as $number) {
             if($number['country'] === $country) {
-                $this->_number_list[] = $number;
+                $this->_numberList[] = $number;
             }
         }
 
@@ -145,8 +145,8 @@ class PhoneNumber extends DataSearch {
             $offset = (($this->_page * $this->_limit) - $this->_limit >= 0 ? ($this->_page * $this->_limit) - $this->_limit : 0);
 
         for($i=$offset; $i < $offset+$this->_limit; $i++) {
-                if (isset($this->_number_list[$i])) {
-                    $numbers_list[] = $this->_number_list[$i];
+                if (isset($this->_numberList[$i])) {
+                    $numbers_list[] = $this->_numberList[$i];
                 }
         }
 
@@ -158,7 +158,7 @@ class PhoneNumber extends DataSearch {
      * @return int
      */
     public function countListNumbers() : int {
-        return count($this->_number_list);
+        return count($this->_numberList);
     }
 
     /**

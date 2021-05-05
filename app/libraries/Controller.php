@@ -6,19 +6,6 @@ namespace app\libraries;
  * Loads the models and views
  */
 class Controller {
-    /**
-     * Load model
-     * @param $model
-     * @return mixed
-     */
-    /*public function model($model) {
-        //Require model file
-        require_once '../app/models/' . $model . ".php";
-        
-        //instantiate model
-        $class = 'app\\models\\' . $model;
-        return new $class();
-    }*/
 
     /**
      * Load view
@@ -42,14 +29,11 @@ class Controller {
      */
     public function pageNumber() : int {
         $urlArray = explode('/', filter_var($_GET['url'], FILTER_SANITIZE_STRING));
-        $page_number = 0;
-
+        $page_number = 1;
         foreach ($urlArray as $key => $url) {
             if($url == 'page') {
                 $page_number = is_numeric($urlArray[$key+1]) ? $urlArray[$key+1] : 1;
                 break;
-            } else {
-                $page_number = 1;
             }
         }
         return $page_number;

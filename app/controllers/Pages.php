@@ -9,7 +9,7 @@ class Pages extends Controller {
     /**
      * @var array|null
      */
-    private $_countries_list;
+    private $_countriesList;
     /**
      * @var PhoneNumber
      */
@@ -31,7 +31,7 @@ class Pages extends Controller {
         $this->_numbers = new PhoneNumber();
         $all_records = $this->_numbers->find('customer', 'phone')->search();
         $this->_numbers->setNumbers($all_records);
-        $this->_countries_list = $this->_numbers->parseNumbers()->all_distinct_countries();
+        $this->_countriesList = $this->_numbers->parseNumbers()->allDistinctCountries();
         //set a global settings pagination
         $this->_page = $this->pageNumber();
         $this->_numbers->setLimit(self::LIMIT_PER_PAGE);
@@ -46,7 +46,7 @@ class Pages extends Controller {
 
         $paginator = new Paginator(URL_ROOT . 'index', "Prev", "Next");
         $paginator->pagination($this->_page, $this->_numbers->countListNumbers(), self::LIMIT_PER_PAGE);
-        
+
         $data = [
             'numbers' => $numbers_list,
             'countries' => $this->_countries_list,
@@ -63,12 +63,12 @@ class Pages extends Controller {
     public function stateNumber($state) : void {
         $numbers_list = $this->_numbers->checkStateNumbers($state)->limitListNumbers();
 
-        $paginator = new Paginator(URL_ROOT . 'pages/'.__FUNCTION__.'/'.$state, "Prev", "Next");
+        $paginator = new Paginator(URL_ROOT . 'pages/stateNumber/'.$state, "Prev", "Next");
         $paginator->pagination($this->_page, $this->_numbers->countListNumbers(), self::LIMIT_PER_PAGE);
         
         $data = [
             'numbers' => $numbers_list,
-            'countries' => $this->_countries_list,
+            'countries' => $this->_countriesList,
             'pagination' => $paginator->render()
         ];
 
@@ -87,7 +87,7 @@ class Pages extends Controller {
 
         $data = [
             'numbers' => $numbers_list,
-            'countries' => $this->_countries_list,
+            'countries' => $this->_countriesList,
             'pagination' => $paginator->render()
         ];
 
